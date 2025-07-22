@@ -96,7 +96,7 @@ def adx(data, window=14):
 #computes features for the prediction model
 def compute_features(df):
     df = calculate_moving_average(df)
-    df = ma_difference(df)
+    df = ma_diff(df)
     df = rsi(df)
     df = bollinger_bands(df)
     df = macd(df)
