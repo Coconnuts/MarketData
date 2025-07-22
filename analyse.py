@@ -12,7 +12,7 @@ def detect_trend(data):
     else:
         return "sideways"
 # Calculate Moving Average Difference
-def ma_difference(data):
+def ma_diff(data):
     df = pd.DataFrame(data)
     df['SMA_diff'] = df['SMA'].diff()
     return df
@@ -93,3 +93,19 @@ def adx(data, window=14):
     df['ADX'] = df['DX'].rolling(window=window).mean()
     
     return df[['close', '+DI', '-DI', 'ADX']]
+#computes features for the prediction model
+def compute_features(df):
+    df = calculate_moving_average(df)
+    df = ma_difference(df)
+    df = rsi(df)
+    df = bollinger_bands(df)
+    df = macd(df)
+    df = pct_change(df)
+    df = momentum(df)
+    df = volatility(df)
+    df = atr(df)
+    df = vwap(df)
+    df = obv(df)
+    df = adx(df)
+
+    return df

@@ -1,9 +1,8 @@
 import requests
 from config import CLIENT_ID, REDIRECT_URI, REFRESH_TOKEN
 TOKEN_URL = "https://api.schwabapi.com/v1/oauth/token"
-
+# auth.py - A module for handling OAuth authentication with Schwab API
 def refresh_access_token():
-    """Refresh the OAuth access token using the refresh token."""
     if not all([CLIENT_ID, REDIRECT_URI, REFRESH_TOKEN]):
         raise ValueError("Missing one or more required environment variables.")
 

@@ -1,0 +1,27 @@
+from analyse import compute_features
+import joblib  # Use plain joblib, not sklearn.externals
+
+model = joblib.load('trained_model.pkl')
+
+def generate_signals(data):
+    data_with_features = compute_features(data)
+
+    # Define feature columns FIRST
+    feature_columns = ['ma_diff', 'rsi', 'macd', 'momentum', 'volatility', 'atr', 'adx', 'obv', 'vwap']
+
+    # Drop rows with NaN values in features
+    features = data_with_features[feature_columns].dropna()
+    if features.empty:
+        return None  # Not enough data to compute signals
+
+    # Predict with trained model
+    predictions = model.predict(features)
+
+    # Align predictions with original data
+    result_df = data_with_features.loc[features.index].copy()
+    result_df['predicted_trend'] = predictions
+
+    return result_df[['close', 'predicted_trend']]
+    
+    
+    
