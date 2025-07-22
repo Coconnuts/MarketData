@@ -11,3 +11,8 @@ def detect_trend(data):
         return "downtrend"
     else:
         return "sideways"
+    
+def ma_difference(data):
+    df = pd.DataFrame(data)
+    df['SMA_diff'] = df['SMA'].diff()
+    return df
