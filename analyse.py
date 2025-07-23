@@ -7,7 +7,7 @@ def calculate_moving_average(data, window=10):
 def detect_trend(data):
     if data['SMA'].iloc[-1] > data['SMA'].iloc[-2]:
         return "uptrend"
-    elif data['SMA'].iloc[-1] > data['SMA'].iloc[-2]:
+    elif data['SMA'].iloc[-1] < data['SMA'].iloc[-2]:
         return "downtrend"
     else:
         return "sideways"
@@ -109,3 +109,4 @@ def compute_features(df):
     df = adx(df)
 
     return df
+print(df.columns)
