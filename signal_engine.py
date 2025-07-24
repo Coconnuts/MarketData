@@ -24,6 +24,9 @@ def generate_signals(data):
     result_df['predicted_trend'] = predictions
 
     return result_df[['close', 'predicted_trend']]
-    
-    
-    
+def save_signals(signals, filename='signals.csv'):
+    if signals is not None and not signals.empty:
+        signals.to_csv(filename, index=False)
+        print(f"Signals saved to {filename}")
+    else:
+        print("No signals to save.")
