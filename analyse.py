@@ -17,19 +17,15 @@ def ma_diff(data):
     df['SMA_diff'] = df['SMA'].diff()
     return df
 # Calculate Relative Strength Index (RSI) (public code)
-def rsi(data, window=14):
-    df = pd.DataFrame(data)
-    df['close'] = pd.to_numeric(df['close'], errors='coerce')
+def rsi(df, window=14):
     delta = df['close'].diff()
     gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
     loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
-    
     rs = gain / loss
     df['RSI'] = 100 - (100 / (1 + rs))
     return df
 # Calculate Bollinger Bands
-def bollinger_bands(data, window=20, num_std_dev=2):
-    df = pd.DataFrame(data)
+def bollinger_bands(df, window=20, num_std_dev=2):
     df['SMA'] = df['close'].rolling(window=window).mean()
     df['std_dev'] = df['close'].rolling(window=window).std()
     df['upper_band'] = df['SMA'] + (df['std_dev'] * num_std_dev)
@@ -59,8 +55,7 @@ def volatility(data, window=20):
     df['volatility'] = df['close'].rolling(window=window).std()
     return df[['close', 'volatility']]
 # ATR (Average True Range) function to calculate ATR (public code)
-def atr(data, window=14):
-    df = pd.DataFrame(data)
+def atr(df, window=14):
     df['high_low'] = df['high'] - df['low']
     df['high_close'] = (df['high'] - df['close'].shift()).abs()
     df['low_close'] = (df['low'] - df['close'].shift()).abs()
@@ -110,4 +105,3 @@ def compute_features(df):
     df = adx(df)
 
     return df
-print(df.columns)

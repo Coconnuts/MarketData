@@ -7,7 +7,10 @@ def generate_signals(data):
     data_with_features = compute_features(data)
 
     # Define feature columns FIRST
-    feature_columns = ['ma_diff', 'rsi', 'macd', 'momentum', 'volatility', 'atr', 'adx', 'obv', 'vwap']
+    feature_columns = [
+        'SMA_diff', 'RSI', 'upper_band', 'lower_band', 'MACD', 'Signal_line',
+        'pct_change', 'momentum', 'volatility', 'ATR', 'VWAP', 'OBV', '+DI', '-DI', 'ADX'
+    ]
 
     # Drop rows with NaN values in features
     features = data_with_features[feature_columns].dropna()
@@ -16,7 +19,6 @@ def generate_signals(data):
 
     # Predict with trained model
     predictions = model.predict(features)
-
     # Align predictions with original data
     result_df = data_with_features.loc[features.index].copy()
     result_df['predicted_trend'] = predictions

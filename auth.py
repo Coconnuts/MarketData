@@ -26,3 +26,15 @@ def refresh_access_token():
     except requests.exceptions.RequestException as e:
         print(f"[auth.py] ❌ Failed to refresh token: {e}")
         return None
+
+def get_authenticated_session():
+    access_token = refresh_access_token()
+    if not access_token:
+        raise Exception("Failed to obtain access token.")
+
+    session = requests.Session()
+    session.headers.update({
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json"
+    })
+    return session
