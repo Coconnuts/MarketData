@@ -19,6 +19,7 @@ def ma_diff(data):
 # Calculate Relative Strength Index (RSI) (public code)
 def rsi(data, window=14):
     df = pd.DataFrame(data)
+    df['close'] = pd.to_numeric(df['close'], errors='coerce')
     delta = df['close'].diff()
     gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
     loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
