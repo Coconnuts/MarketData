@@ -1,6 +1,7 @@
 # MarketData
-   
-## Installation   
+## Installation
+   I'll add a guide eventually, maybe, idk
+## Setup   
    Codespaces are Linux VMs, only use windows commands when on VS code app
    step 1 and 2 are necessary each time you load the CodeSpace
 ```bash
