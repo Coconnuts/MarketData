@@ -1,4 +1,3 @@
-
 import pandas as pd
 import joblib
 from analyse import compute_features, detect_trend
@@ -7,14 +6,28 @@ from sklearn.metrics import accuracy_score, classification_report
 # Load data
 df = pd.read_csv("data/raw/HistoricalData_1753298914633.csv")
 
+# Clean and rename columns to match training
+for col in ['Close/Last', 'Open', 'High', 'Low']:
+    df[col] = df[col].replace({r'\$': ''}, regex=True).astype(float)
+df = df.rename(columns={
+    'Close/Last': 'close',
+    'Open': 'open',
+    'High': 'high',
+    'Low': 'low',
+    'Volume': 'volume'
+})
+
 # Compute features
 features_df = compute_features(df).dropna()
 
-# Label the data with actual trends
+# Add prev_SMA for trend detection
+features_df['prev_SMA'] = features_df['SMA'].shift(1)
+features_df = features_df.dropna(subset=['prev_SMA'])  # Ensure no NaN in prev_SMA
 features_df['actual_trend'] = features_df.apply(detect_trend, axis=1)
 
 # Prepare features and labels
 X = features_df.drop(columns=['close', 'actual_trend'], errors='ignore')
+X = X.select_dtypes(include='number')
 y_true = features_df['actual_trend']
 
 # Load trained model
