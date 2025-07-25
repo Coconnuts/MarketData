@@ -4,7 +4,7 @@ from analyse import compute_features, detect_trend
 from sklearn.metrics import accuracy_score, classification_report
 
 # Load data
-df = pd.read_csv("data/raw/HistoricalData_1753298914633.csv")
+df = pd.read_csv("data/raw/HistoricalData_1753298951206.csv")
 
 # Clean and rename columns to match training
 for col in ['Close/Last', 'Open', 'High', 'Low']:

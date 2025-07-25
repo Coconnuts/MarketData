@@ -37,7 +37,6 @@ def get_formatted_row(ticker_data, ticker):
     now = datetime.now().strftime("%Y-%m-%d")
     return {
         "Date": now,
-        "Ticker": ticker,
         "Close/Last": ticker_data.get("lastPrice"),
         "Open": ticker_data.get("openPrice"),
         "High": ticker_data.get("highPrice"),
@@ -45,14 +44,15 @@ def get_formatted_row(ticker_data, ticker):
         "Volume": ticker_data.get("totalVolume"),
     }
 
-def save_to_csv(rows):
-    df = pd.DataFrame(rows)
-    file_exists = os.path.exists(SAVE_PATH)
+SAVE_DIR = "data/live/"
 
-    if file_exists:
-        df.to_csv(SAVE_PATH, mode='a', header=False, index=False)
-    else:
-        df.to_csv(SAVE_PATH, index=False)
+def save_to_csv(rows):
+    os.makedirs(SAVE_DIR, exist_ok=True)
+    for row in rows:
+        df = pd.DataFrame([row])
+        filename = os.path.join(SAVE_DIR, f"{row['Ticker']}.csv")
+        file_exists = os.path.exists(filename)
+        df.to_csv(filename, mode='a', header=not file_exists, index=False)
 
 def main():
     all_rows = []
