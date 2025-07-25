@@ -1,10 +1,11 @@
+import glob
 import pandas as pd
 import joblib
 from analyse import compute_features, detect_trend
 from sklearn.metrics import accuracy_score, classification_report
 
 # Load data
-df = pd.read_csv("data/raw/HistoricalData_1753298951206.csv")
+df = pd.concat([pd.read_csv(f) for f in glob.glob("data/testing/*.csv")], ignore_index=True)
 
 # Clean and rename columns to match training
 for col in ['Close/Last', 'Open', 'High', 'Low']:
