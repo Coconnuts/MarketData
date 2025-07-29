@@ -1,40 +1,28 @@
 import requests
-from config import CLIENT_ID, REDIRECT_URI, REFRESH_TOKEN
-TOKEN_URL = "https://api.schwabapi.com/v1/oauth/token"
-# auth.py - A module for handling OAuth authentication with Schwab API
-def refresh_access_token():
-    if not all([CLIENT_ID, REDIRECT_URI, REFRESH_TOKEN]):
-        raise ValueError("Missing one or more required environment variables.")
+from config import CLIENT_ID, REDIRECT_URI, AUTHORIZATION_CODE, CLIENT_SECRET
 
-    payload = {
-        "grant_type": "refresh_token",
-        "refresh_token": REFRESH_TOKEN,
-        "client_id": CLIENT_ID,
-        "redirect_uri": REDIRECT_URI
-    }
+# Schwab token endpoint
+token_url = "https://api.schwabapi.com/v1/oauth/token"
 
-    try:
-        response = requests.post(TOKEN_URL, data=payload)
-        response.raise_for_status()
-        tokens = response.json()
-        access_token = tokens.get("access_token")
-        expires_in = tokens.get("expires_in")
+# Your credentials and authorization code
+client_id = CLIENT_ID
+client_secret = CLIENT_SECRET
+redirect_uri = REDIRECT_URI
+authorization_code = AUTHORIZATION_CODE
 
-        print(f"[auth.py] ✅ Token refreshed. Expires in {expires_in} seconds.")
-        return access_token
+# Form the request body
+payload = {
+    "grant_type": "authorization_code",
+    "code": authorization_code,
+    "redirect_uri": redirect_uri,
+    "client_id": client_id
+}
 
-    except requests.exceptions.RequestException as e:
-        print(f"[auth.py] ❌ Failed to refresh token: {e}")
-        return None
+response = requests.post(token_url, data=payload)
 
-def get_authenticated_session():
-    access_token = refresh_access_token()
-    if not access_token:
-        raise Exception("Failed to obtain access token.")
-
-    session = requests.Session()
-    session.headers.update({
-        "Authorization": f"Bearer {access_token}",
-        "Content-Type": "application/json"
-    })
-    return session
+if response.status_code == 200:
+    tokens = response.json()
+    print("Access token:", tokens["access_token"])
+    print("Refresh token:", tokens["refresh_token"])
+else:
+    print("Error:", response.status_code, response.text)
