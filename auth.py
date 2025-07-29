@@ -15,7 +15,8 @@ payload = {
     "grant_type": "authorization_code",
     "code": authorization_code,
     "redirect_uri": redirect_uri,
-    "client_id": client_id
+    "client_id": client_id,
+    "state": "bI6pGpUTIQYnzxpPTtxG5Bdg73u7QINTdRlZJIFpsTk"  # Optional, if you used a state parameter
 }
 
 response = requests.post(token_url, data=payload)

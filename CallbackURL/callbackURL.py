@@ -1,12 +1,14 @@
+import sys
 from flask import Flask, request, redirect, session, abort
 import os
 import secrets
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import CLIENT_ID  # Ensure you have a config.py with CLIENT_ID defined
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)  # Required for secure sessions
 
 # Schwab OAuth2 config
-CLIENT_ID = "your_client_id@AMER.OAUTHAP"  # Replace with your actual client ID
 REDIRECT_URI = "https://127.0.0.1:8443/receive"
 
 # Route to start the OAuth2 flow
