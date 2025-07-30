@@ -18,7 +18,7 @@ df = df.rename(columns={
 })
 
 # Compute features and clean data
-features_df = compute_features(df).dropna()
+features_df = compute_features(df).dropna().copy()
 
 # Add prev_SMA to match training features
 features_df['prev_SMA'] = features_df['SMA'].shift(1)
