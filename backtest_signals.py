@@ -19,7 +19,7 @@ df = df.rename(columns={
 })
 
 # Compute features
-features_df = compute_features(df).dropna()
+features_df = compute_features(df).dropna().copy()  # Explicit copy to avoid SettingWithCopyWarning
 
 # Add prev_SMA for trend detection
 features_df['prev_SMA'] = features_df['SMA'].shift(1)
