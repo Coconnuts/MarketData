@@ -15,7 +15,7 @@ def train_model(data):
     features = features.select_dtypes(include='number')
     labels = data['trend']
 
-    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model = RandomForestClassifier(n_estimators=100, random_state=50)
     model.fit(features, labels)
 
     joblib.dump(model, 'trained_model.pkl')
