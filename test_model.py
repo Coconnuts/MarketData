@@ -1,6 +1,7 @@
 import glob
 import pandas as pd
 import joblib
+import os
 from analyse import compute_features
 
 # Load test historical data
@@ -27,7 +28,8 @@ features_df['prev_SMA'] = features_df['SMA'].shift(1)
 features_df = features_df.dropna(subset=['prev_SMA'])
 
 # Load trained model
-model = joblib.load("trained_model.pkl")
+model_path = "trained_model.pkl"
+model = joblib.load(model_path)
 
 # Select only numeric columns for prediction (as in train_model)
 features = features_df.drop(columns=[col for col in ['close', 'trend', 'Date'] if col in features_df.columns])
@@ -48,8 +50,17 @@ features_df['actual_trend'] = features_df.apply(
 # Now compare predictions to actuals
 missed = (features_df['predicted_trend'] != features_df['actual_trend']).sum()
 total = len(features_df)
+accuracy = (total - missed) / total if total > 0 else 0
 print(f"Missed predictions: {missed} out of {total}")
-print(f"Accuracy: {(total - missed) / total:.2%}")
+print(f"Accuracy: {accuracy:.2%}")
 
 # Output predictions summary
 print(features_df[['predicted_trend']].value_counts())
+
+# Rename the trained model file to include accuracy
+new_model_path = f"trained_model_{accuracy:.2%}.pkl".replace('%', '').replace('.', '_')
+if os.path.exists(model_path):
+    os.rename(model_path, new_model_path)
+    print(f"Renamed model file to: {new_model_path}")
+else:
+    print("Model file not found, skipping rename.")

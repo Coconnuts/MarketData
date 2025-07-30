@@ -23,6 +23,6 @@ for f in files:
     dfs.append(df)
 data = pd.concat(dfs, ignore_index=True)
 
-# Train the model
+# Train the model (RandomForestClassifier)
 model = train_model(data)
 print("Model trained and saved as trained_model.pkl")
