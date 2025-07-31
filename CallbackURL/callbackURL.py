@@ -3,13 +3,10 @@ from flask import Flask, request, redirect, session, abort
 import os
 import secrets
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from config import CLIENT_ID  # Ensure you have a config.py with CLIENT_ID defined
+from config import CLIENT_ID, REDIRECT_URI  # Ensure you have a config.py with CLIENT_ID defined
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)  # Required for secure sessions
-
-# Schwab OAuth2 config
-REDIRECT_URI = "https://127.0.0.1:8443/receive"
 
 # Route to start the OAuth2 flow
 @app.route('/start', methods=['GET'])
@@ -54,4 +51,5 @@ def receive():
 if __name__ == '__main__':
     cert_path = os.path.join(os.path.dirname(__file__), 'cert.pem')
     key_path = os.path.join(os.path.dirname(__file__), 'key.pem')
-    app.run(host='127.0.0.1', port=8443, ssl_context=(cert_path, key_path))
+    app.run(host='0.0.0.0', port=8443, ssl_context=(cert_path, key_path))
+    
