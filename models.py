@@ -2,6 +2,7 @@ import sys
 import os
 import pandas as pd
 import glob
+from analyse import compute_features
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 from prediction_ai import train_model
@@ -22,6 +23,7 @@ for f in files:
     })
     dfs.append(df)
 data = pd.concat(dfs, ignore_index=True)
+data = compute_features(data)
 
 # Train the model (RandomForestClassifier)
 model = train_model(data)

@@ -3,6 +3,8 @@ from analyse import detect_trend
 import joblib
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
+from random import randint
+
 
 def label_data(data):
     data_with_features = compute_features(data)
@@ -17,12 +19,9 @@ def train_model(data, model_path='trained_model.pkl'):
     features = features.select_dtypes(include='number')
     labels = data['trend'].astype(str)
 
-    try:
-        model = joblib.load(model_path)
-        model.fit(features, labels)
-    except FileNotFoundError:
-        model = RandomForestClassifier(random_state=30)
-        model.fit(features, labels)
+    random_state = randint(0, 1000000)
+    model = RandomForestClassifier(random_state=random_state)
+    model.fit(features, labels)
 
     joblib.dump(model, model_path)
     return model

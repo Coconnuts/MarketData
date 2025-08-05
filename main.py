@@ -6,7 +6,6 @@ def run(symbol):
     print(f"Running strategy for {symbol}...")
     data = fetch_historical_data(symbol)['candels']
     df = calculate_moving_average(data)
-    # Assuming you want to detect trend on the latest row
     trend = detect_trend(df.iloc[-1])
     signal = generate_signal(trend)
     print(f"Trend: {trend} -> Signal: {signal}")
