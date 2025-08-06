@@ -2,9 +2,9 @@ from auth import refresh_access_token
 import requests
 import pandas as pd
 import os
-from datetime import datetime
+import pytz
+from datetime import datetime, time as dtime
 import time
-
 # === CONFIG ===
 TICKERS = [
     "AAPL", "MSFT", "GOOGL", "AMZN", "META", "NVDA", "TSLA", "INTC", "CSCO", "PEP",
@@ -23,6 +23,13 @@ TICKERS = [
 SAVE_PATH = "data/live/"
 
 # === FUNCTIONS ===
+
+def is_market_open():
+    est = pytz.timezone('US/Eastern')
+    now = datetime.now(est)
+    market_open = dtime(9, 30)
+    market_close = dtime(16, 0)
+    return market_open <= now.time() <= market_close and now.weekday() < 5
 
 def fetch_ticker_data(tickers, access_token):
     url = "https://api.schwabapi.com/marketdata/v1/quotes"
@@ -84,4 +91,10 @@ def main():
         print("⚠️ No data fetched.")
 
 if __name__ == "__main__":
-    main()
+    while True:
+        if is_market_open():
+            print("📈 Market is open. Waiting 1 hour...")
+            main()
+        else:
+            print("Market closed. Waiting...")
+        time.sleep(3600)
