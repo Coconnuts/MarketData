@@ -7,16 +7,16 @@ from datetime import datetime, time as dtime
 import time
 # === CONFIG ===
 TICKERS = [
-    "AAPL", "MSFT", "GOOGL", "AMZN", "META", "NVDA", "TSLA", "INTC", "CSCO", "PEP",
-    "NFLX", "ADBE", "PYPL", "AVGO", "TXN", "QCOM", "COST", "AMAT", "AMD", "INTU",
-    "SBUX", "ISRG", "BKNG", "MDLZ", "GILD", "ADI", "LRCX", "FISV", "VRTX", "REGN",
-    "MU", "MAR", "KDP", "CTAS", "KLAC", "CDNS", "PANW", "NXPI", "IDXX", "FTNT",
-    "EXC", "WBA", "MCHP", "ANSS", "EBAY", "BIIB", "ROST", "PAYX", "ODFL", "VRSK",
-    "AEP", "CHTR", "ORLY", "PCAR", "CTSH", "FAST", "WDAY", "SIRI", "XEL", "DLTR",
-    "ALGN", "TEAM", "ZS", "MDB", "DDOG", "DOCU", "SNOW", "OKTA", "CRWD", "NET",
-    "PLTR", "ABNB", "UBER", "LYFT", "SHOP", "SQ", "ROKU", "ZM", "BIDU", "NTES",
-    "JD", "PDD", "BABA", "TSM", "ASML", "ARM", "ON", "MRVL", "SWKS", "TTD", "TTWO",
-    "EA", "ATVI", "FSLY", "RBLX", "COIN", "HUBS", "FVRR", "DOCN", "TWLO", "DUOL"
+    "AAPL", "ABNB", "ADBE", "ADI", "AEP", "ALGN", "AMD", "AMAT", "AMZN", "ANSS",
+    "ARM", "ASML", "ATVI", "AVGO", "BABA", "BIDU", "BIIB", "BKNG", "CDNS", "CHTR",
+    "COIN", "COST", "CRWD", "CSCO", "CTAS", "CTSH", "DDOG", "DLTR", "DOCN", "DOCU",
+    "DUOL", "EA", "EBAY", "EXC", "FAST", "FISV", "FSLY", "FTNT", "FVRR", "GILD",
+    "GOOGL", "HUBS", "IDXX", "INTC", "INTU", "ISRG", "JD", "KDP", "KLAC", "LRCX",
+    "LYFT", "MAR", "MDB", "MCHP", "MDLZ", "META", "MRVL", "MSFT", "MU", "NET",
+    "NFLX", "NTES", "NVDA", "NXPI", "ODFL", "OKTA", "ON", "ORLY", "PANW", "PDD",
+    "PAYX", "PCAR", "PEP", "PLTR", "PYPL", "QCOM", "RBLX", "REGN", "ROKU", "ROST",
+    "SBUX", "SHOP", "SIRI", "SNOW", "SQ", "SWKS", "TEAM", "TSM", "TSLA", "TTD",
+    "TTWO", "TWLO", "UBER", "VRSK", "VRTX", "WBA", "WDAY", "XEL", "ZM", "ZS"
 ]
 
 # Replace with your actual token from Schwab or mock data
